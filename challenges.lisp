@@ -29,3 +29,16 @@
                          (t (cons (car lst) (slice-helper (cdr lst) (1+ i)))))))
     (slice-helper lst 0)))
 
+(defun remove-at (lst n)
+  (labels ((remove-at-helper (lst i)
+                           (cond
+                             ((null lst) nil)
+                             ((eq n i) (cdr lst))
+                             (t (cons (car lst) (remove-at-helper (cdr lst) (1+ i)))))))
+    (remove-at-helper lst 0)))
+
+(defun random-select (lst n)
+  (if (or (eq n 0) (null lst)) nil
+    (let ((i (random (length lst))))
+      (cons (nth i lst) (random-select (remove-at lst i) (1- n))))))
+
